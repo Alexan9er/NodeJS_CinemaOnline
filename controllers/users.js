@@ -55,5 +55,14 @@ module.exports = {
         }
       })
       .catch(err => console.log(err));
+  },
+
+  userDetails(req, res) {
+    userId = req.params.id;
+    return User.findByPk(userId)
+      .then(user => {
+        res.status(200).send(user);
+      })
+      .catch(err => console.log(err));
   }
 };
