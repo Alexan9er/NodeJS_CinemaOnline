@@ -22,6 +22,10 @@ const Film = db.define("film", {
       notEmpty: true
     }
   },
+  tags: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
   description: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -44,14 +48,6 @@ const Film = db.define("film", {
       min: 1,
       max: 30
     }
-  },
-  createdAt: {
-    allowNull: false,
-    type: Sequelize.DATE
-  },
-  updatedAt: {
-    allowNull: false,
-    type: Sequelize.DATE
   }
 });
 
