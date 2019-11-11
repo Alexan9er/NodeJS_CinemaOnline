@@ -44,11 +44,10 @@ module.exports = {
                 .then(role => {
                   if (!role) return console.log("Role not found");
 
-                  console.log(newUser);
                   role
                     .createUser(newUser)
                     .then(() => res.sendStatus(200))
-                    .catch(err => console.log("123"));
+                    .catch(err => console.log(err));
                 })
                 .catch(err => console.log(err));
             });
