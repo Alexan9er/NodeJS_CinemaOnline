@@ -4,7 +4,7 @@ This is a test application for learning technologies such as: ***NodeJS, MySQL, 
 ### Quick start
 :round_pushpin: Clone the repo:
 ```bash
- $ git clone https://github.com/Kleimionov-WebRuby/OnlineShop-NodeJS.git
+ $ git clone https://github.com/Alexan9er/NodeJS_CinemaOnline.git
 ```
 
 ### Prerequisite
