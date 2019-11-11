@@ -1,5 +1,8 @@
 # VsCode folder
 /.vscode
 
+# VsCode folder
+/config/data
+
 # Node_modules folder
 /node_modules

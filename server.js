@@ -2,6 +2,8 @@ const express = require("express");
 
 const app = express();
 
+require("./db/connectionDB");
+
 app.use((req, res, next) => {
   res.status(404).send("Not found");
 });
