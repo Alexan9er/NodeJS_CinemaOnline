@@ -1,8 +1,14 @@
 const express = require("express");
+const bodyParser = require("body-parser");
 
 const app = express();
 
 require("./db/connectionDB");
+
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+require("./routes")(app);
 
 app.use((req, res, next) => {
   res.status(404).send("Not found");
