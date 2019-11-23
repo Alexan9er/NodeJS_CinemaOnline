@@ -7,6 +7,9 @@ class UserService {
   async getAllUsers() {
     return await UserRepository.getAllUsers();
   }
+  async getCurrentUser(userId) {
+    return await UserRepository.getCurrentUser({ id: userId });
+  }
 }
 
 module.exports = new UserService();

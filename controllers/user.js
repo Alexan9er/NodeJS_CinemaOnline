@@ -5,6 +5,12 @@ class UserController {
     const users = await UserService.getAllUsers();
     res.status(200).send(users);
   }
+
+  async getCurrentUser(req, res) {
+    const userId = req.params.id;
+    const user = await UserService.getCurrentUser(userId);
+    res.status(200).send(user);
+  }
 }
 
 module.exports = new UserController();

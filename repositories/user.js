@@ -7,6 +7,9 @@ class UserRepository {
   getAllUsers() {
     return User.findAll();
   }
+  getCurrentUser(conditions) {
+    return User.findOne({ where: conditions });
+  }
 }
 
 module.exports = new UserRepository();
