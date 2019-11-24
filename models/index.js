@@ -5,6 +5,7 @@ const Tag = require("./tag");
 
 const FilmsTags = require("./films_tags");
 const UsersRoles = require("./users_roles");
+const Tickets = require("./tickets");
 
 module.exports = () => {
   Role.belongsToMany(User, { through: UsersRoles });
@@ -21,6 +22,16 @@ module.exports = () => {
   Tag.belongsToMany(
     Film,
     { through: FilmsTags },
+    { onDelete: "cascade", onUpdate: "cascade" }
+  );
+  Film.belongsToMany(
+    User,
+    { through: Tickets },
+    { onDelete: "cascade", onUpdate: "cascade" }
+  );
+  User.belongsToMany(
+    Film,
+    { through: Tickets },
     { onDelete: "cascade", onUpdate: "cascade" }
   );
 };
