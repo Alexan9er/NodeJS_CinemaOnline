@@ -52,7 +52,7 @@ CREATE TABLE films_tags (
 
 CREATE TABLE tags (
 	id INT NOT NULL AUTO_INCREMENT,
-	tag varchar(255) NOT NULL,   
+	tag varchar(255) NOT NULL UNIQUE,   
 	PRIMARY KEY (id)
 );
 
