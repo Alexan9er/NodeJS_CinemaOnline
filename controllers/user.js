@@ -11,6 +11,11 @@ class UserController {
     const user = await UserService.getCurrentUser(userId);
     res.status(200).send(user);
   }
+
+  async register(req, res) {
+    const user = await UserService.create(req.body);
+    res.status(200).send(user);
+  }
 }
 
 module.exports = new UserController();
