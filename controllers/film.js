@@ -13,6 +13,13 @@ class FilmController {
     await filmService.deleteFilm(filmId);
     res.sendStatus(200);
   }
+
+  async createFilm(req, res) {
+    const filmData = req.body;
+    const addedFilm = await filmService.createFilm(filmData);
+
+    res.status(200).send(addedFilm);
+  }
 }
 
 module.exports = FilmController;
