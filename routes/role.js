@@ -1,6 +1,8 @@
 const router = require("express").Router();
 const RoleController = require("../controllers/role");
 
-router.get("/", RoleController.getRoles);
+const roleController = new RoleController();
+
+router.get("/", roleController.getRoles);
 
 module.exports = router;

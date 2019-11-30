@@ -10,4 +10,4 @@ class FilmRepository {
   }
 }
 
-module.exports = new FilmRepository();
+module.exports = FilmRepository;

@@ -1,13 +1,15 @@
 const FilmRepository = require("../repositories/film");
 
+const filmRepository = new FilmRepository();
+
 class FilmService {
   async getAllFilms() {
-    return await FilmRepository.getAllFilms();
+    return await filmRepository.getAllFilms();
   }
 
   async deleteFilm(filmId) {
-    return await FilmRepository.deleteFilm({ id: filmId });
+    return await filmRepository.deleteFilm({ id: filmId });
   }
 }
 
-module.exports = new FilmService();
+module.exports = FilmService;
