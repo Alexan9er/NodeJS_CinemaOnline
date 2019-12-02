@@ -22,6 +22,11 @@ class UserController {
   async login(req, res) {
     res.status(200).send(req.user);
   }
+
+  async logout(req, res) {
+    req.logout();
+    res.status(204).end();
+  }
 }
 
 module.exports = UserController;
