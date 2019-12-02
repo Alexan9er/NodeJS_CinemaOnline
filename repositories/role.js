@@ -9,4 +9,4 @@ class RoleRepository {
   }
 }
 
-module.exports = new RoleRepository();
+module.exports = RoleRepository;

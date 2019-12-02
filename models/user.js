@@ -55,13 +55,12 @@ const User = sequelize.define(
         const salt = await bcrypt.genSalt(10); //whatever number you want
         user.password = await bcrypt.hash(user.password, salt);
       }
-    },
-    instanceMethods: {
-      validPassword: async function(password) {
-        return await bcrypt.compare(password, this.password);
-      }
     }
   }
 );
+
+User.prototype.validPassword = async function(password) {
+  return await bcrypt.compare(password, this.password);
+};
 
 module.exports = User;

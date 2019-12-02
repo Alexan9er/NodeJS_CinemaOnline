@@ -1,8 +1,20 @@
 const Film = require("../models/film");
+const Tag = require("../models/tag");
 
 class FilmRepository {
   getAllFilms() {
-    return Film.findAll();
+    return Film.findAll({
+      include: [
+        {
+          model: Tag,
+          attributes: ["id", "tag"]
+        }
+      ]
+    });
+  }
+
+  createFilm(film) {
+    return Film.create(film);
   }
 
   deleteFilm(conditions) {
@@ -10,4 +22,4 @@ class FilmRepository {
   }
 }
 
-module.exports = new FilmRepository();
+module.exports = FilmRepository;
