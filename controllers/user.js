@@ -18,6 +18,10 @@ class UserController {
     const user = await userService.create(req.body);
     res.status(200).send(user);
   }
+
+  async login(req, res) {
+    res.status(200).send(req.user);
+  }
 }
 
 module.exports = UserController;
