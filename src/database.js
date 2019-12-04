@@ -4,7 +4,7 @@ const {
   user,
   password,
   otherOptions
-} = require("./config/connectionData");
+} = require("../config/connectionData");
 
 const sequelize = new Sequelize(databaseName, user, password, otherOptions);
 
