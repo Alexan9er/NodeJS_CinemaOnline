@@ -15,7 +15,7 @@ class UserRepository {
       ]
     });
   }
-  getCurrentUser(conditions) {
+  getUser(conditions) {
     return User.findOne({ where: conditions });
   }
 }

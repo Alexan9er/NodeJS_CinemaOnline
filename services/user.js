@@ -8,16 +8,16 @@ const CustomError = require("../helpers/errors");
 
 class UserService {
   async create(user) {
-    const role = await roleRepository.getCurrentRole({ title: "user" });
+    const role = await roleRepository.getRole({ title: "user" });
     if (user) {
-      const isExist = await userRepository.getCurrentUser({
+      const isExist = await userRepository.getUser({
         email: user.email
       });
       if (!isExist) {
         const newUser = await userRepository.create(user);
         await newUser.addRole(role);
 
-        const addedUser = await userRepository.getCurrentUser({
+        const addedUser = await userRepository.getUser({
           id: newUser.id
         });
 
@@ -30,8 +30,8 @@ class UserService {
   async getAllUsers() {
     return await userRepository.getAllUsers();
   }
-  async getCurrentUser(userId) {
-    return await userRepository.getCurrentUser({ id: userId });
+  async getUser(userId) {
+    return await userRepository.getUser({ id: userId });
   }
 }
 

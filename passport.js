@@ -12,7 +12,7 @@ passport.use(
       usernameField: "email"
     },
     async (email, password, done) => {
-      const user = await userRepository.getCurrentUser({ email });
+      const user = await userRepository.getUser({ email });
 
       if (user) {
         const passwordIsValid = await user.validPassword(password);
@@ -34,7 +34,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser(async (id, done) => {
-  const user = await userRepository.getCurrentUser({ id });
+  const user = await userRepository.getUser({ id });
   done(null, user);
 });
 

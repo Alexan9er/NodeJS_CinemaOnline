@@ -9,9 +9,9 @@ class UserController {
     res.status(200).send(users);
   }
 
-  async getCurrentUser(req, res) {
+  async getUser(req, res) {
     const userId = req.params.id;
-    const user = await userService.getCurrentUser(userId);
+    const user = await userService.getUser(userId);
     res.status(200).send(user);
   }
 

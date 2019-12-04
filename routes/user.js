@@ -7,7 +7,7 @@ const userController = new UserController();
 const isAuthenticated = require("../middlewares/is-authorized");
 
 router.get("/", userController.getAllUsers);
-router.get("/:id", userController.getCurrentUser);
+router.get("/:id", userController.getUser);
 
 router.post("/login", passport.authenticate("local"), userController.login);
 router.post("/register", userController.register);
