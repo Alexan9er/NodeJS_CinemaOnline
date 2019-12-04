@@ -16,6 +16,7 @@ exports.connection = () =>
       .authenticate()
       .then(() => {
         console.log("Connection has been established successfully.");
+        sequelize.sync({ logging: false });
         resolve();
       })
       .catch(err => {
