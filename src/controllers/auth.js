@@ -7,6 +7,7 @@ class UserController {
   async register(req, res, next) {
     try {
       const user = await userService.create(req.body);
+
       res.status(200).send(user);
     } catch (err) {
       next(new CustomError(err, 500));
