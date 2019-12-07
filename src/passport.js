@@ -1,7 +1,7 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 
-const CustomError = require("./helpers/errors");
+const CustomError = require("./classes/errors");
 
 const UserRepository = require("./repositories/user");
 const userRepository = new UserRepository();

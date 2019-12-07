@@ -4,7 +4,7 @@ const RoleRepository = require("../repositories/role");
 const userRepository = new UserRepository();
 const roleRepository = new RoleRepository();
 
-const CustomError = require("../helpers/errors");
+const CustomError = require("../classes/errors");
 
 class UserService {
   async create(user) {

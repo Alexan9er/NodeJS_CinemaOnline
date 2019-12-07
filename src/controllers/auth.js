@@ -1,7 +1,7 @@
 const UserService = require("../services/user");
 const userService = new UserService();
 
-const CustomError = require("../helpers/errors");
+const CustomError = require("../classes/errors");
 
 class UserController {
   async register(req, res, next) {
