@@ -16,7 +16,15 @@ class UserRepository {
     });
   }
   getUser(conditions) {
-    return User.findOne({ where: conditions });
+    return User.findOne({
+      where: conditions,
+      include: [
+        {
+          model: Role,
+          attributes: ["id", "title"]
+        }
+      ]
+    });
   }
 }
 
