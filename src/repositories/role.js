@@ -4,7 +4,7 @@ class RoleRepository {
   getRoles() {
     return Role.findAll();
   }
-  getCurrentRole(conditions) {
+  getRole(conditions) {
     return Role.findOne({ where: conditions });
   }
 }

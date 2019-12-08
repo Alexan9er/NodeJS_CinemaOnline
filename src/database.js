@@ -4,7 +4,7 @@ const {
   user,
   password,
   otherOptions
-} = require("./config/connectionData");
+} = require("../config/connectionData");
 
 const sequelize = new Sequelize(databaseName, user, password, otherOptions);
 
@@ -16,6 +16,7 @@ exports.connection = () =>
       .authenticate()
       .then(() => {
         console.log("Connection has been established successfully.");
+        sequelize.sync({ logging: false });
         resolve();
       })
       .catch(err => {

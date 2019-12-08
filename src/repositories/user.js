@@ -15,8 +15,16 @@ class UserRepository {
       ]
     });
   }
-  getCurrentUser(conditions) {
-    return User.findOne({ where: conditions });
+  getUser(conditions) {
+    return User.findOne({
+      where: conditions,
+      include: [
+        {
+          model: Role,
+          attributes: ["id", "title"]
+        }
+      ]
+    });
   }
 }
 
