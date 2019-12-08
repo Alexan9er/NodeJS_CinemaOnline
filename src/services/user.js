@@ -4,17 +4,20 @@ const RoleRepository = require("../repositories/role");
 const userRepository = new UserRepository();
 const roleRepository = new RoleRepository();
 
-const CustomError = require("../classes/errors");
+const ValidationError = require("../classes/errors/validation-error");
 
 class UserService {
   async create(user) {
     const role = await roleRepository.getRole({ title: "user" });
+
     if (user) {
       const isExist = await userRepository.getUser({
         email: user.email
       });
+
       if (!isExist) {
         const newUser = await userRepository.create(user);
+
         await newUser.addRole(role);
 
         const addedUser = await userRepository.getUser({
@@ -23,7 +26,7 @@ class UserService {
 
         return addedUser;
       } else {
-        throw new CustomError("This user is already exist!", 400);
+        throw new ValidationError("This user is already exist!", 400);
       }
     }
   }
