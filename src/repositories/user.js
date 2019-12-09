@@ -26,6 +26,9 @@ class UserRepository {
       ]
     });
   }
+  updateUser(conditions, data) {
+    return User.update(data, { where: conditions });
+  }
 }
 
 module.exports = UserRepository;

@@ -36,6 +36,9 @@ class UserService {
   async getUser(userId) {
     return await userRepository.getUser({ id: userId });
   }
+  async updateUser(userId, data) {
+    return await userRepository.updateUser({ id: userId }, data);
+  }
 }
 
 module.exports = UserService;
