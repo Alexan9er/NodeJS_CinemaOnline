@@ -39,6 +39,25 @@ class UserService {
   async updateUser(userId, data) {
     return await userRepository.updateUser({ id: userId }, data);
   }
+
+  async deleteUser(userId) {
+    const user = await userRepository.getUser({
+      id: userId
+    });
+
+    if (user) {
+      if (user.removeRequest) {
+        return await userRepository.deleteUser({ id: userId });
+      } else {
+        throw new ValidationError(
+          "This user has not submitted a removal request.",
+          400
+        );
+      }
+    } else {
+      throw new ValidationError("This user does not exist.", 400);
+    }
+  }
 }
 
 module.exports = UserService;

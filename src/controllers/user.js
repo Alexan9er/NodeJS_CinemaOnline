@@ -22,6 +22,14 @@ class UserController {
 
     res.status(200).end();
   }
+
+  async deleteUser(req, res) {
+    const userId = req.params.id;
+
+    await userService.deleteUser(userId);
+
+    res.status(200).end();
+  }
 }
 
 module.exports = UserController;
