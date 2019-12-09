@@ -26,6 +26,12 @@ class UserRepository {
       ]
     });
   }
+  updateUser(conditions, data) {
+    return User.update(data, { where: conditions });
+  }
+  deleteUser(conditions) {
+    return User.destroy({ where: conditions });
+  }
 }
 
 module.exports = UserRepository;
