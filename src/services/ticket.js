@@ -7,8 +7,12 @@ const userRepository = new UserRepository();
 const filmRepository = new FilmRepository();
 
 class TicketService {
-  async getAllTickets() {
-    return await ticketRepository.getAllTickets();
+  async getAllTickets(filmId) {
+    if (filmId) {
+      return await ticketRepository.getAllTickets({ filmId: filmId });
+    } else {
+      return await ticketRepository.getAllTickets();
+    }
   }
 
   async addTicket(userId, filmId) {
