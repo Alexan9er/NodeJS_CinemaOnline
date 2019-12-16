@@ -34,4 +34,7 @@ module.exports = () => {
     { through: Tickets },
     { onDelete: "cascade", onUpdate: "cascade" }
   );
+
+  Tickets.belongsTo(Film);
+  Tickets.belongsTo(User);
 };

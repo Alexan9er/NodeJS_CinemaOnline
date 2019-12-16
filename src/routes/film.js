@@ -7,6 +7,6 @@ const filmController = new FilmController();
 
 router.get("/", filmController.getAllFilms);
 router.delete("/:id", filmController.deleteFilm);
-router.post("/create", isAdmin, requestWrap(filmController.createFilm));
-
+router.post("/create", requestWrap(filmController.createFilm));
+// isAdmin,
 module.exports = router;
