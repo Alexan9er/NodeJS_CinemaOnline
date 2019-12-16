@@ -2,8 +2,9 @@ const Film = require("../models/film");
 const Tag = require("../models/tag");
 
 class FilmRepository {
-  getAllFilms() {
+  getAllFilms(conditions) {
     return Film.findAll({
+      where: conditions,
       include: [
         {
           model: Tag,
@@ -12,6 +13,18 @@ class FilmRepository {
       ]
     });
   }
+
+  // getFilm(conditions) {
+  //   return Film.findOne({
+  //     where: conditions,
+  //     include: [
+  //       {
+  //         model: Tag,
+  //         attributes: ["id", "tag"]
+  //       }
+  //     ]
+  //   });
+  // }
 
   createFilm(film) {
     return Film.create(film);
