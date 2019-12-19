@@ -8,5 +8,6 @@ const filmController = new FilmController();
 router.get("/", filmController.getAllFilms);
 router.delete("/:id", filmController.deleteFilm);
 router.post("/create", requestWrap(filmController.createFilm));
+router.put("/:id", requestWrap(filmController.updateFilm));
 // isAdmin,
 module.exports = router;

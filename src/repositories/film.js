@@ -14,17 +14,21 @@ class FilmRepository {
     });
   }
 
-  // getFilm(conditions) {
-  //   return Film.findOne({
-  //     where: conditions,
-  //     include: [
-  //       {
-  //         model: Tag,
-  //         attributes: ["id", "tag"]
-  //       }
-  //     ]
-  //   });
-  // }
+  getFilm(conditions) {
+    return Film.findOne({
+      where: conditions,
+      include: [
+        {
+          model: Tag,
+          attributes: ["id", "tag"]
+        }
+      ]
+    });
+  }
+
+  updateFilm(conditions, film) {
+    return Film.update(film, { where: conditions });
+  }
 
   createFilm(film) {
     return Film.create(film);

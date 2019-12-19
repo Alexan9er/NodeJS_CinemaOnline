@@ -20,6 +20,14 @@ class FilmController {
 
     res.status(200).send(addedFilm);
   }
+
+  async updateFilm(req, res) {
+    const filmId = req.params.id;
+
+    await filmService.updateFilm(filmId, req.body);
+
+    res.status(200).end();
+  }
 }
 
 module.exports = FilmController;
