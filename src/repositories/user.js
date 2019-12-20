@@ -8,9 +8,9 @@ class UserRepository {
     return User.create(user);
   }
 
-  getAllUsers(pagination, query) {
+  getAllUsers(pagination, conditions) {
     const { limit, offset } = pagination;
-    const { firstName, lastName } = query;
+    const { firstName, lastName } = conditions;
 
     const whereOptions = {
       firstName: {
