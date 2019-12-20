@@ -17,7 +17,7 @@ class TicketService {
 
   async addTicket(userId, filmId) {
     const user = await userRepository.getUser({ id: userId });
-    const film = await filmRepository.getAllFilms({ id: filmId });
+    const film = await filmRepository.getFilm({ id: filmId });
 
     const addedTicket = await user.addFilm(film);
 
@@ -26,7 +26,7 @@ class TicketService {
 
   async deleteTicket(userId, filmId) {
     const user = await userRepository.getUser({ id: userId });
-    const film = await filmRepository.getAllFilms({ id: filmId });
+    const film = await filmRepository.getFilm({ id: filmId });
 
     return await user.removeFilm(film);
   }
