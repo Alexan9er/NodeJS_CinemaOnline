@@ -3,7 +3,8 @@ const userService = new UserService();
 
 class UserController {
   async getAllUsers(req, res) {
-    const users = await userService.getAllUsers();
+    const options = req.query;
+    const users = await userService.getAllUsers(options);
 
     res.status(200).send(users);
   }

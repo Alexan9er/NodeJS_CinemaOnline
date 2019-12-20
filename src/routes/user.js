@@ -6,8 +6,8 @@ const isAuthenticated = require("../middlewares/is-authorized");
 
 const UserController = require("../controllers/user");
 const userController = new UserController();
-
-router.get("/", isAdmin, requestWrap(userController.getAllUsers));
+// isAdmin,
+router.get("/", requestWrap(userController.getAllUsers));
 router.get("/:id", requestWrap(userController.getUser));
 router.put("/", isAuthenticated, requestWrap(userController.updateUser));
 router.delete("/:id", isAdmin, requestWrap(userController.deleteUser));

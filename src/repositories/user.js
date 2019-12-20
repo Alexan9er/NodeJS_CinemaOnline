@@ -1,20 +1,44 @@
 const User = require("../models/user");
 const Role = require("../models/role");
 
+const { Op, Sequelize } = require("sequelize");
+
 class UserRepository {
   create(user) {
     return User.create(user);
   }
-  getAllUsers() {
-    return User.findAll({
+
+  getAllUsers(pagination, query) {
+    const { limit, offset } = pagination;
+    const { firstName, lastName } = query;
+
+    const whereOptions = {
+      firstName: {
+        [Op.like]: `%${firstName}%`
+      },
+      lastName: {
+        [Op.like]: `%${lastName}%`
+      }
+    };
+
+    const sequelizeOptions = {
       include: [
         {
           model: Role,
           attributes: ["id", "title"]
         }
-      ]
-    });
+      ],
+      where: whereOptions,
+      limit,
+      offset
+    };
+
+    if (!firstName) delete whereOptions.firstName;
+    if (!lastName) delete whereOptions.lastName;
+
+    return User.findAll(sequelizeOptions);
   }
+
   getUser(conditions) {
     return User.findOne({
       where: conditions,

@@ -6,6 +6,8 @@ const roleRepository = new RoleRepository();
 
 const ValidationError = require("../classes/errors/validation-error");
 
+const helpers = require("../helpers");
+
 class UserService {
   async create(user) {
     const role = await roleRepository.getRole({ title: "user" });
@@ -30,8 +32,11 @@ class UserService {
       }
     }
   }
-  async getAllUsers() {
-    return await userRepository.getAllUsers();
+  async getAllUsers(query) {
+    const queryCopy = JSON.parse(JSON.stringify(query));
+    const { pagination } = helpers.pagination(queryCopy);
+
+    return await userRepository.getAllUsers(pagination, queryCopy);
   }
   async getUser(userId) {
     return await userRepository.getUser({ id: userId });
