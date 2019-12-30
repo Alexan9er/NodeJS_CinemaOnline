@@ -22,4 +22,19 @@ const pagination = query => {
   return { pagination };
 };
 
-module.exports = { pagination };
+const splitOptions = (query, searchingField) => {
+  const result = {
+    [searchingField]: query[searchingField]
+  };
+
+  const resultIds =
+    result[searchingField] && result[searchingField].length > 0
+      ? JSON.parse(`[${result[searchingField]}]`)
+      : null;
+
+  delete query[searchingField];
+
+  return resultIds;
+};
+
+module.exports = { pagination, splitOptions };

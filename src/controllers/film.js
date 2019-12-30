@@ -4,7 +4,9 @@ const filmService = new FilmService();
 
 class FilmController {
   async getAllFilms(req, res) {
-    const films = await filmService.getAllFilms();
+    const options = req.query;
+    const films = await filmService.getAllFilms(options);
+
     res.status(200).send(films);
   }
 

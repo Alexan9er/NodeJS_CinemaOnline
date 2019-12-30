@@ -1,16 +1,29 @@
 const Film = require("../models/film");
 const Tag = require("../models/tag");
 
+const { Op } = require("sequelize");
+
 class FilmRepository {
-  getAllFilms(conditions) {
+  getAllFilms(pagination, conditions, tagsIds) {
+    const { limit, offset } = pagination;
+
+    const whereOptions = {
+      id: { [Op.in]: tagsIds }
+    };
+
+    if (!tagsIds) delete whereOptions.id;
+
     return Film.findAll({
       where: conditions,
       include: [
         {
           model: Tag,
-          attributes: ["id", "tag"]
+          attributes: ["id", "tag"],
+          where: whereOptions
         }
-      ]
+      ],
+      limit,
+      offset
     });
   }
 

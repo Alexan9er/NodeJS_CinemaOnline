@@ -4,9 +4,15 @@ const TagRepository = require("../repositories/tag");
 const filmRepository = new FilmRepository();
 const tagRepository = new TagRepository();
 
+const helpers = require("../helpers");
+
 class FilmService {
-  async getAllFilms() {
-    return await filmRepository.getAllFilms();
+  async getAllFilms(query) {
+    const queryCopy = JSON.parse(JSON.stringify(query));
+    const { pagination } = helpers.pagination(queryCopy);
+    const tags = helpers.splitOptions(queryCopy, "tags");
+
+    return await filmRepository.getAllFilms(pagination, queryCopy, tags);
   }
 
   async createFilm(film) {
