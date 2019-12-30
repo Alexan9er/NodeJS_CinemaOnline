@@ -4,9 +4,9 @@ const ticketService = new TicketService();
 
 class TicketController {
   async getAllTickets(req, res) {
-    const { filmId } = req.query;
+    const options = req.query;
 
-    const tickets = await ticketService.getAllTickets(filmId);
+    const tickets = await ticketService.getAllTickets(options);
 
     res.status(200).send(tickets);
   }

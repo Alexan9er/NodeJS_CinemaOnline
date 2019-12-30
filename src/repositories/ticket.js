@@ -3,7 +3,9 @@ const Film = require("../models/film");
 const User = require("../models/user");
 
 class TicketRepository {
-  getAllTickets(conditions) {
+  getAllTickets(pagination, conditions) {
+    const { limit, offset } = pagination;
+
     return Ticket.findAll({
       where: conditions,
       include: [
@@ -22,7 +24,9 @@ class TicketRepository {
             "endDate"
           ]
         }
-      ]
+      ],
+      limit,
+      offset
     });
   }
 }

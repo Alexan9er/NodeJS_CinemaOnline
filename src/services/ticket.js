@@ -6,13 +6,13 @@ const ticketRepository = new TicketRepository();
 const userRepository = new UserRepository();
 const filmRepository = new FilmRepository();
 
+const helpers = require("../helpers");
+
 class TicketService {
-  async getAllTickets(filmId) {
-    if (filmId) {
-      return await ticketRepository.getAllTickets({ filmId: filmId });
-    } else {
-      return await ticketRepository.getAllTickets();
-    }
+  async getAllTickets(options) {
+    const { pagination } = helpers.pagination(options);
+
+    return await ticketRepository.getAllTickets(pagination, options);
   }
 
   async addTicket(userId, filmId) {
