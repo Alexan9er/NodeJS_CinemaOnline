@@ -12,7 +12,7 @@ class TicketController {
   }
 
   async addTicket(req, res) {
-    const userId = req.body.userId;
+    const userId = req.user.id;
     const filmId = req.body.filmId;
 
     const ticket = await ticketService.addTicket(userId, filmId);
@@ -21,7 +21,7 @@ class TicketController {
   }
 
   async deleteTicket(req, res) {
-    const userId = req.body.userId;
+    const userId = req.user.id;
     const filmId = req.body.filmId;
 
     await ticketService.deleteTicket(userId, filmId);
