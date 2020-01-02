@@ -29,6 +29,34 @@ class TicketRepository {
       offset
     });
   }
+
+  getTicketsForUser(pagination, conditions, userId) {
+    const { limit, offset } = pagination;
+    const whereCondition = {};
+
+    Object.assign(whereCondition, conditions, { userId: userId });
+
+    console.log(whereCondition);
+
+    return Ticket.findAll({
+      where: whereCondition,
+      include: [
+        {
+          model: Film,
+          attributes: [
+            "id",
+            "title",
+            "image",
+            "description",
+            "startDate",
+            "endDate"
+          ]
+        }
+      ],
+      limit,
+      offset
+    });
+  }
 }
 
 module.exports = TicketRepository;

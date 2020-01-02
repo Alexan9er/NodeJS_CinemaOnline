@@ -37,4 +37,16 @@ const splitOptions = (query, searchingField) => {
   return resultIds;
 };
 
-module.exports = { pagination, splitOptions };
+const checkRole = roles => {
+  let isAdmin = false;
+
+  roles.forEach(role => {
+    if (role.title === "admin") {
+      isAdmin = true;
+    }
+  });
+
+  return isAdmin;
+};
+
+module.exports = { pagination, splitOptions, checkRole };

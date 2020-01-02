@@ -9,10 +9,21 @@ const filmRepository = new FilmRepository();
 const helpers = require("../helpers");
 
 class TicketService {
-  async getAllTickets(options) {
+  async getAllTickets(options, user) {
     const { pagination } = helpers.pagination(options);
+    const { roles } = user;
 
-    return await ticketRepository.getAllTickets(pagination, options);
+    const isAdmin = helpers.checkRole(roles);
+
+    if (!isAdmin) {
+      return await ticketRepository.getTicketsForUser(
+        pagination,
+        options,
+        user.id
+      );
+    } else {
+      return await ticketRepository.getAllTickets(pagination, options);
+    }
   }
 
   async addTicket(userId, filmId) {
