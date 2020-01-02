@@ -13,7 +13,7 @@ class FilmRepository {
 
     if (!tagsIds) delete whereOptions.id;
 
-    return Film.findAll({
+    return Film.findAndCountAll({
       where: conditions,
       include: [
         {
