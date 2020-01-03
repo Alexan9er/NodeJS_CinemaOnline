@@ -6,10 +6,27 @@ const isAuthenticated = require("../middlewares/is-authorized");
 
 const UserController = require("../controllers/user");
 const userController = new UserController();
-// isAdmin,
-router.get("/", requestWrap(userController.getAllUsers));
-router.get("/:id", requestWrap(userController.getUser));
-router.put("/", isAuthenticated, requestWrap(userController.updateUser));
-router.delete("/:id", isAdmin, requestWrap(userController.deleteUser));
+
+const validationSchemas = require("../validation-schemas");
+const validate = require("../middlewares/validation");
+
+router.get("/", isAdmin, requestWrap(userController.getAllUsers));
+router.get(
+  "/:id",
+  validate({ params: validationSchemas.id }),
+  requestWrap(userController.getUser)
+);
+router.put(
+  "/",
+  isAuthenticated,
+  validate({ body: validationSchemas.userUpdate }),
+  requestWrap(userController.updateUser)
+);
+router.delete(
+  "/:id",
+  isAdmin,
+  validate({ params: validationSchemas.id }),
+  requestWrap(userController.deleteUser)
+);
 
 module.exports = router;
