@@ -12,7 +12,14 @@ class TicketController {
     res.status(200).send(tickets);
   }
 
-  ц
+  async addTicket(req, res) {
+    const userId = req.user.id;
+    const filmId = req.body.filmId;
+
+    const ticket = await ticketService.addTicket(userId, filmId);
+
+    res.status(200).send(ticket);
+  }
 
   async deleteTicket(req, res) {
     const userId = req.user.id;

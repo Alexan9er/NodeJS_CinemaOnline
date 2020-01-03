@@ -9,6 +9,8 @@ const filmCreate = require("./film-create");
 
 const tag = require("./tag");
 
+const ticketAddDelete = require("./ticket-add-delete");
+
 module.exports = {
   id,
   userUpdate,
@@ -16,5 +18,6 @@ module.exports = {
   userRegistration,
   filmUpdate,
   filmCreate,
-  tag
+  tag,
+  ticketAddDelete
 };
