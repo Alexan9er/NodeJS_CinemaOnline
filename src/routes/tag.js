@@ -1,8 +1,17 @@
 const router = require("express").Router();
-const TagController = require("../controllers/tag");
+const isAdmin = require("../middlewares/is-admin");
 
+const TagController = require("../controllers/tag");
 const tagController = new TagController();
 
-router.post("/create", tagController.createTag);
+const validationSchemas = require("../validation-schemas");
+const validate = require("../middlewares/validation");
+
+router.post(
+  "/create",
+  validate({ body: validationSchemas.tag }),
+  isAdmin,
+  tagController.createTag
+);
 
 module.exports = router;

@@ -7,11 +7,14 @@ const userRegistration = require("./user-registration");
 const filmUpdate = require("./film-update");
 const filmCreate = require("./film-create");
 
+const tag = require("./tag");
+
 module.exports = {
   id,
   userUpdate,
   userLogin,
   userRegistration,
   filmUpdate,
-  filmCreate
+  filmCreate,
+  tag
 };
