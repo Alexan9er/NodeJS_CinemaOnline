@@ -1,12 +1,13 @@
 const Sequelize = require("sequelize");
-const {
-  databaseName,
-  user,
-  password,
-  otherOptions
-} = require("../config/connectionData");
 
-const sequelize = new Sequelize(databaseName, user, password, otherOptions);
+const config = require("./config");
+
+const sequelize = new Sequelize(
+  config.database.name,
+  config.database.user,
+  config.database.password,
+  config.database.otherOptions
+);
 
 exports.sequelize = sequelize;
 
