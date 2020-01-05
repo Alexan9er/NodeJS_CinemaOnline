@@ -1,16 +1,13 @@
 const AuthError = require("../classes/errors/auth-error");
 const AccessError = require("../classes/errors/access-error");
 
+const helpers = require("../helpers");
+
 module.exports = (req, res, next) => {
   if (req.user) {
-    const rolesArray = req.user.roles;
-    let isAdmin = false;
+    const { roles } = req.user;
 
-    rolesArray.forEach(role => {
-      if (role.title === "admin") {
-        isAdmin = true;
-      }
-    });
+    const isAdmin = helpers.checkRole(roles);
 
     if (!isAdmin) {
       next(

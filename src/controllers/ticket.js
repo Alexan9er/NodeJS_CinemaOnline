@@ -4,15 +4,16 @@ const ticketService = new TicketService();
 
 class TicketController {
   async getAllTickets(req, res) {
-    const { filmId } = req.query;
+    const options = req.query;
+    const user = req.user;
 
-    const tickets = await ticketService.getAllTickets(filmId);
+    const tickets = await ticketService.getAllTickets(options, user);
 
     res.status(200).send(tickets);
   }
 
   async addTicket(req, res) {
-    const userId = req.body.userId;
+    const userId = req.user.id;
     const filmId = req.body.filmId;
 
     const ticket = await ticketService.addTicket(userId, filmId);
@@ -21,7 +22,7 @@ class TicketController {
   }
 
   async deleteTicket(req, res) {
-    const userId = req.body.userId;
+    const userId = req.user.id;
     const filmId = req.body.filmId;
 
     await ticketService.deleteTicket(userId, filmId);

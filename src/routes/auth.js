@@ -8,8 +8,20 @@ const isAuthenticated = require("../middlewares/is-authorized");
 
 const requestWrap = require("../middlewares/request-wrap");
 
-router.post("/login", passport.authenticate("local"), authController.login);
-router.post("/register", requestWrap(authController.register));
+const validationSchemas = require("../validation-schemas");
+const validate = require("../middlewares/validation");
+
+router.post(
+  "/login",
+  validate({ body: validationSchemas.userLogin }),
+  passport.authenticate("local"),
+  authController.login
+);
+router.post(
+  "/register",
+  validate({ body: validationSchemas.userRegistration }),
+  requestWrap(authController.register)
+);
 router.get("/logout", isAuthenticated, authController.logout);
 
 module.exports = router;
