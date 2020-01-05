@@ -1,6 +1,8 @@
 const app = require("express")();
 const loaders = require("./loaders");
 
+const config = require("./config");
+
 const notFound = require("./middlewares/not-found");
 
 exports.start = () => {
@@ -8,7 +10,8 @@ exports.start = () => {
 
   app.use(notFound);
 
-  const PORT = process.env.PORT || 5000;
-
-  app.listen(PORT, console.log(`Server started on port ${PORT}`));
+  app.listen(
+    config.server.port,
+    console.log(`Server started on port ${config.server.port}`)
+  );
 };
