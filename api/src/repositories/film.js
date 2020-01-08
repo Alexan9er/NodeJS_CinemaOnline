@@ -13,7 +13,7 @@ class FilmRepository {
 
     if (!tagsIds) delete whereOptions.id;
 
-    return Film.findAndCountAll({
+    const sequelizeOptions = {
       where: conditions,
       include: [
         {
@@ -24,7 +24,11 @@ class FilmRepository {
       ],
       limit,
       offset
-    });
+    };
+
+    if (!tagsIds) delete sequelizeOptions.include[0].where;
+
+    return Film.findAndCountAll(sequelizeOptions);
   }
 
   getFilm(conditions) {
