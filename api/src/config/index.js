@@ -9,6 +9,7 @@ module.exports = {
     password: process.env.DB_PASSWORD,
     otherOptions: {
       dialect: "mysql",
+      host: process.env.MYSQL_URL || "localhost",
       define: {
         timestamps: false,
         underscored: true
