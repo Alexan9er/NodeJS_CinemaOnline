@@ -1,11 +1,19 @@
 const database = require("./database");
 const Logger = require("./classes/logger");
+const Rabbit = require("./classes/rabbit");
+
+const rabbit = new Rabbit();
 
 (async () => {
-  try {
-    Logger.start();
-    await database.connect();
-  } catch (err) {
-    console.log(err);
-  }
+  Logger.start();
+
+  database
+    .connect()
+    .then(() => {
+      Logger.writeLogs(`Connected to DataBase`);
+      rabbit.start();
+    })
+    .catch(err => {
+      Logger.writeLogs(err);
+    });
 })();

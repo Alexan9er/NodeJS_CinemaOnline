@@ -8,12 +8,10 @@ exports.connect = () => {
     });
 
     mongoose.connection.on("error", err => {
-      console.error(`Database Connection Error: ${err}`);
       reject(err);
     });
 
     mongoose.connection.on("connected", () => {
-      console.info("Successfully connected to MongoDB Database");
       resolve();
     });
   });

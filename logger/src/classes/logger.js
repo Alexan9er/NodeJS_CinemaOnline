@@ -1,4 +1,5 @@
 const winston = require("winston");
+const Log = require("../models/log");
 
 class Logger {
   constructor() {
@@ -9,8 +10,12 @@ class Logger {
       transports: [new winston.transports.Console()]
     });
   }
-  sendLogs(message) {
+  writeLogs(message) {
     this.logger.info(message);
+    Log.create({
+      info: message,
+      date: new Date()
+    });
   }
 }
 
