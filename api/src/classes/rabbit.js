@@ -22,6 +22,9 @@ class Rabbit {
           channel.assertQueue(config.rabbitMQ.logsQueue, {
             durable: true
           });
+          channel.assertQueue(config.rabbitMQ.emailsQueue, {
+            durable: true
+          });
           resolve();
         });
       });
