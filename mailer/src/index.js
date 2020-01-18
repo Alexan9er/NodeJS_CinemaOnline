@@ -1,7 +1,9 @@
 const Mailer = require("./classes/mailer");
+const Rabbit = require("./classes/rabbit");
 
-const mailer = new Mailer();
+const rabbit = new Rabbit();
 
 (() => {
-  mailer.start();
+  Mailer.start();
+  rabbit.start();
 })();
