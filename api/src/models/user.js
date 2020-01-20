@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const { sequelize } = require("../database");
+const crypto = require("crypto");
 
 const HashCompare = require("../classes/hash-and-compare");
 const hashCompare = new HashCompare();
@@ -47,6 +48,16 @@ const User = sequelize.define("user", {
     defaultValue: false,
     field: "remove_request",
     allowNull: false
+  },
+  resetPasswordToken: {
+    type: Sequelize.STRING,
+    required: false,
+    field: "reset_password_token"
+  },
+  resetPasswordExpires: {
+    type: Sequelize.DATE,
+    required: false,
+    field: "reset_password_expires"
   }
 });
 
@@ -54,8 +65,19 @@ User.prototype.validPassword = async function(password) {
   return await hashCompare.compare(password, this.password);
 };
 
+User.prototype.generatePasswordReset = function() {
+  this.resetPasswordToken = crypto.randomBytes(20).toString("hex");
+  this.resetPasswordExpires = Date.now() + 3600000; //expires in an hour
+};
+
 User.beforeCreate(async user => {
   user.password = await hashCompare.hash(user.password);
+});
+
+User.beforeUpdate(async user => {
+  if (user.changed("password")) {
+    user.password = await hashCompare.hash(user.password);
+  }
 });
 
 module.exports = User;

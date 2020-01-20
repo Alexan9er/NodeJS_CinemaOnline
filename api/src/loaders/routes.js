@@ -4,6 +4,7 @@ const filmRoute = require("../routes/film");
 const ticketRoute = require("../routes/ticket");
 const tagRoute = require("../routes/tag");
 const authRoute = require("../routes/auth");
+const passwordRoute = require("../routes/password");
 
 module.exports = app => {
   app.use(authRoute);
@@ -12,4 +13,5 @@ module.exports = app => {
   app.use("/api/films", filmRoute);
   app.use("/api/tickets", ticketRoute);
   app.use("/api/tags", tagRoute);
+  app.use("/api/password", passwordRoute);
 };

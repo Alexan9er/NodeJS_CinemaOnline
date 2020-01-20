@@ -8,6 +8,9 @@ const ValidationError = require("../classes/errors/validation-error");
 
 const helpers = require("../helpers");
 
+const Rabbit = require("../classes/rabbit");
+const config = require("../config");
+
 class UserService {
   async create(user) {
     const role = await roleRepository.getRole({ title: "user" });
@@ -52,7 +55,11 @@ class UserService {
 
     if (user) {
       if (user.removeRequest) {
-        return await userRepository.deleteUser({ id: userId });
+        Rabbit.sendToQueue(config.rabbitMQ.emailsQueue, {
+          recipient: user.email,
+          emailMessage: "Your account has been deleted."
+        });
+        // return await userRepository.deleteUser({ id: userId });
       } else {
         throw new ValidationError(
           "This user has not submitted a removal request.",

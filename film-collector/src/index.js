@@ -1,7 +1,10 @@
+const config = require("./config");
 const database = require("./database");
 const Film = require("./models/film");
 
 const CronJob = require("cron").CronJob;
+
+const Rabbit = require("./classes/rabbit");
 
 (async () => {
   try {
@@ -17,6 +20,10 @@ const CronJob = require("cron").CronJob;
 
           if (endDate < currentDate) {
             film.destroy();
+            Rabbit.sendToQueue(
+              config.rabbitMQ.logsQueue,
+              `Film with this id (${film.id}) was deleted`
+            );
           }
         });
       } catch (err) {
