@@ -12,6 +12,7 @@ services:
     container_name: api_service
     depends_on:
       - mysql
+      - rabbitmq
     restart: on-failure
     build: ./api/
     environment:
@@ -19,11 +20,13 @@ services:
       PORT: 5000
       DB_USER: user
       DB_PASSWORD: root
+      RABBITMQ_URL: amqp://rabbitmq
     ports:
       - 5000:5000
   film-collector:
     depends_on:
       - mysql
+      - rabbitmq
     container_name: film-collector_service
     build: ./film-collector/
     restart: on-failure
@@ -31,6 +34,25 @@ services:
       MYSQL_URL: mysql
       DB_USER: user
       DB_PASSWORD: root
+      RABBITMQ_URL: amqp://rabbitmq
+  mailer:
+    container_name: mailer_service
+    build: ./mailer/
+    restart: on-failure
+    environment:
+      RABBITMQ_URL: amqp://rabbitmq
+    depends_on:
+      - rabbitmq
+  logger:
+    container_name: logger_service
+    build: ./logger/
+    restart: on-failure
+    environment:
+      RABBITMQ_URL: amqp://rabbitmq
+      MONGO_URI: mongodb://mongo/cinema-logs
+    depends_on:
+      - rabbitmq
+      - mongo
   mysql:
     container_name: mysql_service
     image: mysql
@@ -44,6 +66,12 @@ services:
       - 3307:3306
     volumes:
       - mysql:/var/lib/mysql
+  mongo:
+    container_name: mongo_service
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
 
 volumes:
   mysql:

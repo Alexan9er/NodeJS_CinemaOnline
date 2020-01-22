@@ -1,6 +1,7 @@
 module.exports = {
   mongoDB: {
-    databaseUrl: "mongodb://localhost:27017/cinema-logs"
+    databaseUrl:
+      process.env.MONGO_URI || "mongodb://localhost:27017/cinema-logs"
   },
   rabbitMQ: {
     url:
