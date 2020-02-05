@@ -2,7 +2,6 @@ const AccessError = require("../classes/errors/access-error");
 
 const helpers = require("../helpers");
 
-// TODO delete checking on the user auth
 module.exports = (req, res, next) => {
   const { roles } = req.user;
 
