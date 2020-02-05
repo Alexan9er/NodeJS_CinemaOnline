@@ -1,11 +1,11 @@
 const winston = require("winston");
 const { ErrorLog, InfoLog } = require("../models");
 
-// TODO type of info
 class Logger {
   constructor() {
     this._logger = null;
   }
+
   start() {
     this._logger = winston.createLogger({
       transports: [new winston.transports.Console()]

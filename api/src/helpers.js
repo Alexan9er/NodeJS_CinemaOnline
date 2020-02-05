@@ -37,7 +37,6 @@ const splitOptions = (query, searchingField) => {
   return resultIds;
 };
 
-//TODO Rename function - isAdmin
 const isAdmin = roles => {
   let isAdmin = false;
 
