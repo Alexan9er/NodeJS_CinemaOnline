@@ -4,7 +4,8 @@ const RoleRepository = require("../repositories/role");
 const userRepository = new UserRepository();
 const roleRepository = new RoleRepository();
 
-const ValidationError = require("../classes/errors/validation-error");
+const AuthError = require("../classes/errors/auth-error");
+const UnprocessableEntityError = require("../classes/errors/unprocessable-entity-error");
 
 const helpers = require("../helpers");
 
@@ -31,7 +32,7 @@ class UserService {
 
         return addedUser;
       } else {
-        throw new ValidationError("This user is already exist!");
+        throw new AuthError("This user is already exist!");
       }
     }
   }
@@ -60,12 +61,12 @@ class UserService {
           emailMessage: "Your account has been deleted."
         });
       } else {
-        throw new ValidationError(
+        throw new UnprocessableEntityError(
           "This user has not submitted a removal request."
         );
       }
     } else {
-      throw new ValidationError("This user does not exist.");
+      throw new UnprocessableEntityError("This user does not exist.");
     }
   }
 }
