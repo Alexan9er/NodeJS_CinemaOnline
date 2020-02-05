@@ -1,11 +1,11 @@
 const bcrypt = require("bcryptjs");
 
-class HashCompare {
+class Hash {
   constructor() {
     this.saltCount = 10;
   }
 
-  hash(password) {
+  generate(password) {
     const hashedPassword = new Promise((resolve, reject) => {
       bcrypt
         .hash(password, this.saltCount)
@@ -27,4 +27,4 @@ class HashCompare {
   }
 }
 
-module.exports = HashCompare;
+module.exports = Hash;
