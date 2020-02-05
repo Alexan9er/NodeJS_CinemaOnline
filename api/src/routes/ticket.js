@@ -4,7 +4,7 @@ const requestWrap = require("../middlewares/request-wrap");
 const TicketController = require("../controllers/ticket");
 const ticketController = new TicketController();
 
-const isAuthenticated = require("../middlewares/is-authorized");
+const isAuthenticated = require("../middlewares/is-authenticated");
 
 const validationSchemas = require("../validation-schemas");
 const validate = require("../middlewares/validation");

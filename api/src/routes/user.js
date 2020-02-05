@@ -2,7 +2,7 @@ const router = require("express").Router();
 const requestWrap = require("../middlewares/request-wrap");
 
 const isAdmin = require("../middlewares/is-admin");
-const isAuthenticated = require("../middlewares/is-authorized");
+const isAuthenticated = require("../middlewares/is-authenticated");
 
 const UserController = require("../controllers/user");
 const userController = new UserController();

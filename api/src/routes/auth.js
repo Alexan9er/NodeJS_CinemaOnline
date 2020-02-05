@@ -4,7 +4,7 @@ const passport = require("passport");
 const AuthController = require("../controllers/auth");
 const authController = new AuthController();
 
-const isAuthenticated = require("../middlewares/is-authorized");
+const isAuthenticated = require("../middlewares/is-authenticated");
 
 const requestWrap = require("../middlewares/request-wrap");
 

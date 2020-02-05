@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-const isAuthenticated = require("../middlewares/is-authorized");
+const isAuthenticated = require("../middlewares/is-authenticated");
 const requestWrap = require("../middlewares/request-wrap");
 const validationSchemas = require("../validation-schemas");
 const validate = require("../middlewares/validation");
