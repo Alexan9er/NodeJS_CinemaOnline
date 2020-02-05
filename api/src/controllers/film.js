@@ -12,7 +12,9 @@ class FilmController {
 
   async deleteFilm(req, res) {
     const filmId = req.params.id;
+
     await filmService.deleteFilm(filmId);
+
     res.sendStatus(200);
   }
 
