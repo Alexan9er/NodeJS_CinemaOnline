@@ -8,6 +8,10 @@ const filmController = new FilmController();
 const validationSchemas = require("../validation-schemas");
 const validate = require("../middlewares/validation");
 
+const isAuthenticated = require("../middlewares/is-authenticated");
+
+router.use(isAuthenticated);
+
 router.get("/", filmController.getAllFilms);
 router.delete(
   "/:id",

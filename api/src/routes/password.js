@@ -8,14 +8,11 @@ const validate = require("../middlewares/validation");
 const PasswordController = require("../controllers/password");
 const passwordController = new PasswordController();
 
-router.post(
-  "/recover",
-  isAuthenticated,
-  requestWrap(passwordController.recover)
-);
+router.use(isAuthenticated);
+
+router.post("/recover", requestWrap(passwordController.recover));
 router.post(
   "/reset/:token",
-  isAuthenticated,
   validate({
     params: validationSchemas.token,
     body: validationSchemas.resetPassword

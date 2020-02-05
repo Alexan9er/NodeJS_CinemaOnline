@@ -10,6 +10,8 @@ const userController = new UserController();
 const validationSchemas = require("../validation-schemas");
 const validate = require("../middlewares/validation");
 
+router.use(isAuthenticated);
+
 router.get("/", isAdmin, requestWrap(userController.getAllUsers));
 router.get(
   "/:id",
@@ -18,7 +20,6 @@ router.get(
 );
 router.put(
   "/",
-  isAuthenticated,
   validate({ body: validationSchemas.userUpdate }),
   requestWrap(userController.updateUser)
 );
