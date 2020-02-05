@@ -1,8 +1,7 @@
 class AuthError extends Error {
-  constructor(message, status) {
+  constructor(message) {
     super(message);
     this.name = "AuthenticationError";
-    this.status = status;
   }
 }
 

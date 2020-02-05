@@ -1,8 +1,7 @@
 class AccessError extends Error {
-  constructor(message, status) {
+  constructor(message) {
     super(message);
     this.name = "AccessError";
-    this.status = status;
   }
 }
 
