@@ -2,13 +2,15 @@ const router = require("express").Router();
 const requestWrap = require("../middlewares/request-wrap");
 
 const isAdmin = require("../middlewares/is-admin");
-const isAuthenticated = require("../middlewares/is-authorized");
+const isAuthenticated = require("../middlewares/is-authenticated");
 
 const UserController = require("../controllers/user");
 const userController = new UserController();
 
 const validationSchemas = require("../validation-schemas");
 const validate = require("../middlewares/validation");
+
+router.use(isAuthenticated);
 
 router.get("/", isAdmin, requestWrap(userController.getAllUsers));
 router.get(
@@ -18,7 +20,6 @@ router.get(
 );
 router.put(
   "/",
-  isAuthenticated,
   validate({ body: validationSchemas.userUpdate }),
   requestWrap(userController.updateUser)
 );

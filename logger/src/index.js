@@ -10,10 +10,10 @@ const rabbit = new Rabbit();
   database
     .connect()
     .then(() => {
-      Logger.writeLogs(`Connected to DataBase`);
+      Logger.writeLog(`Connected to DataBase`);
       rabbit.start();
     })
     .catch(err => {
-      Logger.writeLogs(err);
+      Logger.writeError(err);
     });
 })();

@@ -1,3 +1,5 @@
+const constants = require("./config/constants");
+
 const pagination = query => {
   let pageNum, sizeNum;
   let { page, size } = query;
@@ -37,11 +39,11 @@ const splitOptions = (query, searchingField) => {
   return resultIds;
 };
 
-const checkRole = roles => {
+const isAdmin = roles => {
   let isAdmin = false;
 
   roles.forEach(role => {
-    if (role.title === "admin") {
+    if (role.title === constants.user.roles.admin) {
       isAdmin = true;
     }
   });
@@ -49,4 +51,8 @@ const checkRole = roles => {
   return isAdmin;
 };
 
-module.exports = { pagination, splitOptions, checkRole };
+const copyQuery = query => {
+  return JSON.parse(JSON.stringify(query));
+};
+
+module.exports = { pagination, splitOptions, isAdmin, copyQuery };

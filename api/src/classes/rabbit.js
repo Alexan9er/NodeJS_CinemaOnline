@@ -3,22 +3,22 @@ const config = require("../config");
 
 class Rabbit {
   constructor() {
-    this.channel = null;
+    this._channel = null;
   }
 
   start() {
     return new Promise((resolve, reject) => {
-      amqp.connect(config.rabbitMQ.url, (error0, connection) => {
-        if (error0) {
-          reject(error0);
+      amqp.connect(config.rabbitMQ.url, (connectionError, connection) => {
+        if (connectionError) {
+          reject(connectionError);
         }
 
-        connection.createChannel((error1, channel) => {
-          if (error1) {
-            reject(error1);
+        connection.createChannel((channelError, channel) => {
+          if (channelError) {
+            reject(channelError);
           }
 
-          this.channel = channel;
+          this._channel = channel;
           channel.assertQueue(config.rabbitMQ.logsQueue, {
             durable: true
           });
@@ -32,7 +32,7 @@ class Rabbit {
   }
 
   sendToQueue(queueName, message) {
-    this.channel.sendToQueue(queueName, Buffer.from(JSON.stringify(message)));
+    this._channel.sendToQueue(queueName, Buffer.from(JSON.stringify(message)));
     console.log(` [x] Sent - ${message}`);
   }
 }

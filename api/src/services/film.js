@@ -8,7 +8,7 @@ const helpers = require("../helpers");
 
 class FilmService {
   async getAllFilms(query) {
-    const queryCopy = JSON.parse(JSON.stringify(query));
+    const queryCopy = helpers.copyQuery(query);
     const { pagination } = helpers.pagination(queryCopy);
     const tags = helpers.splitOptions(queryCopy, "tags");
 
@@ -38,7 +38,10 @@ class FilmService {
   }
 
   async deleteFilm(filmId) {
-    return await filmRepository.deleteFilm({ id: filmId });
+    const film = await filmRepository.getFilm({ id: filmId });
+    if (film) {
+      return await filmRepository.deleteFilm({ id: filmId });
+    }
   }
 }
 

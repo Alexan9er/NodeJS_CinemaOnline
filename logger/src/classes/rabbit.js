@@ -1,19 +1,17 @@
 const amqp = require("amqplib/callback_api");
 const config = require("../config");
 const Logger = require("./logger");
+const constants = require("../config/constants");
 
 class Rabbit {
-  constructor() {
-    this.channel = null;
-  }
   start() {
-    amqp.connect(config.rabbitMQ.url, (error0, connection) => {
-      if (error0) {
-        throw error0;
+    amqp.connect(config.rabbitMQ.url, (connectionError, connection) => {
+      if (connectionError) {
+        throw connectionError;
       }
-      connection.createChannel((error1, channel) => {
-        if (error1) {
-          throw error1;
+      connection.createChannel((channelError, channel) => {
+        if (channelError) {
+          throw channelError;
         }
 
         const { logsQueue } = config.rabbitMQ;
@@ -30,7 +28,20 @@ class Rabbit {
         channel.consume(
           logsQueue,
           message => {
-            Logger.writeLogs(message.content.toString());
+            const { logType, message: content } = JSON.parse(
+              message.content.toString()
+            );
+
+            switch (logType) {
+              case constants.logTypes.info:
+                Logger.writeLog(content);
+                break;
+              case constants.logTypes.error:
+                Logger.writeError(content);
+                break;
+              default:
+                Logger.writeError("Type of log did not find!");
+            }
           },
           {
             noAck: true

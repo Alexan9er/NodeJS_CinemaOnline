@@ -2,8 +2,8 @@ const Sequelize = require("sequelize");
 const { sequelize } = require("../database");
 const crypto = require("crypto");
 
-const HashCompare = require("../classes/hash-and-compare");
-const hashCompare = new HashCompare();
+const Hash = require("../classes/hash");
+const hash = new Hash();
 
 const User = sequelize.define("user", {
   id: {
@@ -62,7 +62,7 @@ const User = sequelize.define("user", {
 });
 
 User.prototype.validPassword = async function(password) {
-  return await hashCompare.compare(password, this.password);
+  return await hash.compare(password, this.password);
 };
 
 User.prototype.generatePasswordReset = function() {
@@ -71,12 +71,12 @@ User.prototype.generatePasswordReset = function() {
 };
 
 User.beforeCreate(async user => {
-  user.password = await hashCompare.hash(user.password);
+  user.password = await hash.generate(user.password);
 });
 
 User.beforeUpdate(async user => {
   if (user.changed("password")) {
-    user.password = await hashCompare.hash(user.password);
+    user.password = await hash.generate(user.password);
   }
 });
 

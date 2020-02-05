@@ -20,14 +20,10 @@ passport.use(
         if (passwordIsValid) {
           return done(null, user);
         } else {
-          return done(
-            new ValidationError("Email or password is incorrect!", 401)
-          );
+          return done(new ValidationError("Email or password is incorrect!"));
         }
       } else {
-        return done(
-          new ValidationError("Email or password is incorrect!", 401)
-        );
+        return done(new ValidationError("Email or password is incorrect!"));
       }
     }
   )

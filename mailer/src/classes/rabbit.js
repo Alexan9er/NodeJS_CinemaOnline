@@ -1,22 +1,24 @@
 const amqp = require("amqplib/callback_api");
 const config = require("../config");
 const Mailer = require("./mailer");
+const constants = require("../config/constants");
 
 class Rabbit {
   constructor() {
-    this.channel = null;
+    this._channel = null;
   }
+
   start() {
-    amqp.connect(config.rabbitMQ.url, (error0, connection) => {
-      if (error0) {
-        throw error0;
+    amqp.connect(config.rabbitMQ.url, (connectionError, connection) => {
+      if (connectionError) {
+        throw connectionError;
       }
-      connection.createChannel((error1, channel) => {
-        if (error1) {
-          throw error1;
+      connection.createChannel((channelError, channel) => {
+        if (channelError) {
+          throw channelError;
         }
 
-        this.channel = channel;
+        this._channel = channel;
         const { logsQueue, emailsQueue } = config.rabbitMQ;
 
         channel.assertQueue(logsQueue, {
@@ -31,19 +33,23 @@ class Rabbit {
           logsQueue
         );
 
-        this.channel.consume(emailsQueue, message => {
+        this._channel.consume(emailsQueue, message => {
           const { recipient, emailMessage } = JSON.parse(
             message.content.toString()
           );
 
           Mailer.sendMail(emailMessage, recipient)
             .then(() => {
-              this.sendToLogsQueue(
-                `Message to ${recipient} was send successfuly`
-              );
+              this.sendToLogsQueue({
+                logType: constants.logTypes.info,
+                message: `Message to ${recipient} was send successfuly`
+              });
             })
             .catch(err => {
-              this.sendToLogsQueue(`Mailer has error: ${err}`);
+              this.sendToLogsQueue({
+                logType: constants.logTypes.error,
+                message: `Mailer has error: ${err}`
+              });
             });
         });
       });
@@ -51,7 +57,7 @@ class Rabbit {
   }
 
   sendToLogsQueue(message) {
-    this.channel.sendToQueue(
+    this._channel.sendToQueue(
       config.rabbitMQ.logsQueue,
       Buffer.from(JSON.stringify(message))
     );

@@ -1,7 +1,7 @@
 const User = require("../models/user");
 const Role = require("../models/role");
 
-const { Op, Sequelize } = require("sequelize");
+const { Op } = require("sequelize");
 
 class UserRepository {
   create(user) {

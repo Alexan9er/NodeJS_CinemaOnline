@@ -4,6 +4,6 @@ module.exports = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();
   } else {
-    throw new AuthError("You are not authenticated!", 400);
+    throw new AuthError("You are not authenticated!");
   }
 };

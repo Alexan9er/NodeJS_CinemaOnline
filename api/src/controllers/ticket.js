@@ -4,8 +4,7 @@ const ticketService = new TicketService();
 
 class TicketController {
   async getAllTickets(req, res) {
-    const options = req.query;
-    const user = req.user;
+    const { user, query: options } = req;
 
     const tickets = await ticketService.getAllTickets(options, user);
 

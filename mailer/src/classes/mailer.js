@@ -1,4 +1,5 @@
 const nodemailer = require("nodemailer");
+const constants = require("../config/constants");
 
 class Mailer {
   constructor() {
@@ -10,8 +11,8 @@ class Mailer {
       host: "smtp.mailtrap.io",
       port: 2525,
       auth: {
-        user: "12445f07f0e579",
-        pass: "fa427d3026094b"
+        user: constants.email.user,
+        pass: constants.email.password
       }
     });
   }
@@ -19,9 +20,9 @@ class Mailer {
   sendMail(message, recipient) {
     return new Promise((resolve, reject) => {
       const emailMessage = {
-        from: "elonmusk@tesla.com",
+        from: constants.email.from,
         to: recipient,
-        subject: "Design Your Model S | Tesla",
+        subject: constants.email.subject,
         html: message
       };
 

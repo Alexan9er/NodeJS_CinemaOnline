@@ -13,7 +13,7 @@ class TicketService {
     const { pagination } = helpers.pagination(options);
     const { roles } = user;
 
-    const isAdmin = helpers.checkRole(roles);
+    const isAdmin = helpers.isAdmin(roles);
 
     if (!isAdmin) {
       return await ticketRepository.getTicketsForUser(
