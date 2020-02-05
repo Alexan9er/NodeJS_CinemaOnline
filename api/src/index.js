@@ -3,6 +3,7 @@ const server = require("./server");
 const Models = require("./models");
 const config = require("./config");
 const Rabbit = require("./classes/rabbit");
+const constants = require("./config/constants");
 
 (async () => {
   try {
@@ -11,6 +12,9 @@ const Rabbit = require("./classes/rabbit");
     Models();
     server.start();
   } catch (err) {
-    Rabbit.sendToQueue(config.rabbitMQ.logsQueue, err);
+    Rabbit.sendToQueue(config.rabbitMQ.logsQueue, {
+      logType: constants.logTypes.error,
+      message: err
+    });
   }
 })();

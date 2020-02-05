@@ -3,6 +3,7 @@ const loaders = require("./loaders");
 const config = require("./config");
 const notFound = require("./middlewares/not-found");
 const Rabbit = require("./classes/rabbit");
+const constants = require("./config/constants");
 
 exports.start = () => {
   loaders(app);
@@ -11,9 +12,9 @@ exports.start = () => {
 
   app.listen(
     config.server.port,
-    Rabbit.sendToQueue(
-      config.rabbitMQ.logsQueue,
-      `Server started on port ${config.server.port}`
-    )
+    Rabbit.sendToQueue(config.rabbitMQ.logsQueue, {
+      logType: constants.logTypes.info,
+      message: `Server started on port ${config.server.port}`
+    })
   );
 };
