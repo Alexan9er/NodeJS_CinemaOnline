@@ -8,7 +8,7 @@ const validationSchemas = require("../validation-schemas");
 const validate = require("../middlewares/validation");
 
 router.post(
-  "/create",
+  "/",
   validate({ body: validationSchemas.tag }),
   isAdmin,
   tagController.createTag

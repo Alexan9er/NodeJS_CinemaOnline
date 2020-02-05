@@ -13,10 +13,10 @@ router.delete(
   "/:id",
   validate({ params: validationSchemas.id }),
   isAdmin,
-  filmController.deleteFilm
+  requestWrap(filmController.deleteFilm)
 );
 router.post(
-  "/create",
+  "/",
   validate({
     body: validationSchemas.filmCreate
   }),
