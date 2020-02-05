@@ -1,3 +1,5 @@
+const constants = require("./config/constants");
+
 const pagination = query => {
   let pageNum, sizeNum;
   let { page, size } = query;
@@ -41,7 +43,7 @@ const isAdmin = roles => {
   let isAdmin = false;
 
   roles.forEach(role => {
-    if (role.title === "admin") {
+    if (role.title === constants.user.roles.admin) {
       isAdmin = true;
     }
   });
