@@ -1,6 +1,7 @@
 const amqp = require("amqplib/callback_api");
 const config = require("../config");
 const Logger = require("./logger");
+const constants = require("../config/constants");
 
 class Rabbit {
   start() {
@@ -27,7 +28,20 @@ class Rabbit {
         channel.consume(
           logsQueue,
           message => {
-            Logger.writeLogs(message.content.toString());
+            const { logType, message: content } = JSON.parse(
+              message.content.toString()
+            );
+
+            switch (logType) {
+              case constants.logTypes.info:
+                Logger.writeLog(content);
+                break;
+              case constants.logTypes.error:
+                Logger.writeError(content);
+                break;
+              default:
+                Logger.writeError("Type of log did not find!");
+            }
           },
           {
             noAck: true

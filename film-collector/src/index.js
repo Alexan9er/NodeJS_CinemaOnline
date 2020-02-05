@@ -5,7 +5,9 @@ const Film = require("./models/film");
 const CronJob = require("cron").CronJob;
 
 const Rabbit = require("./classes/rabbit");
+const constants = require("./config/constants");
 
+// TODO utcOffset() to fix time zone
 (async () => {
   try {
     await database.connection();
@@ -20,10 +22,10 @@ const Rabbit = require("./classes/rabbit");
 
           if (endDate < currentDate) {
             film.destroy();
-            Rabbit.sendToQueue(
-              config.rabbitMQ.logsQueue,
-              `Film with this id (${film.id}) was deleted`
-            );
+            Rabbit.sendToQueue(config.rabbitMQ.logsQueue, {
+              logType: constants.logTypes.info,
+              message: `Film with this id (${film.id}) was deleted`
+            });
           }
         });
       } catch (err) {

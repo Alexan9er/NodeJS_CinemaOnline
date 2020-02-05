@@ -1,6 +1,7 @@
 const amqp = require("amqplib/callback_api");
 const config = require("../config");
 const Mailer = require("./mailer");
+const constants = require("../config/constants");
 
 class Rabbit {
   constructor() {
@@ -39,12 +40,16 @@ class Rabbit {
 
           Mailer.sendMail(emailMessage, recipient)
             .then(() => {
-              this.sendToLogsQueue(
-                `Message to ${recipient} was send successfuly`
-              );
+              this.sendToLogsQueue({
+                logType: constants.logTypes.info,
+                message: `Message to ${recipient} was send successfuly`
+              });
             })
             .catch(err => {
-              this.sendToLogsQueue(`Mailer has error: ${err}`);
+              this.sendToLogsQueue({
+                logType: constants.logTypes.error,
+                message: `Mailer has error: ${err}`
+              });
             });
         });
       });
