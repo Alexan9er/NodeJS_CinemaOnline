@@ -31,12 +31,12 @@ class UserService {
 
         return addedUser;
       } else {
-        throw new ValidationError("This user is already exist!", 400);
+        throw new ValidationError("This user is already exist!");
       }
     }
   }
   async getAllUsers(query) {
-    const queryCopy = JSON.parse(JSON.stringify(query));
+    const queryCopy = helpers.copyQuery(query);
     const { pagination } = helpers.pagination(queryCopy);
 
     return await userRepository.getAllUsers(pagination, queryCopy);
@@ -59,15 +59,13 @@ class UserService {
           recipient: user.email,
           emailMessage: "Your account has been deleted."
         });
-        // return await userRepository.deleteUser({ id: userId });
       } else {
         throw new ValidationError(
-          "This user has not submitted a removal request.",
-          400
+          "This user has not submitted a removal request."
         );
       }
     } else {
-      throw new ValidationError("This user does not exist.", 400);
+      throw new ValidationError("This user does not exist.");
     }
   }
 }

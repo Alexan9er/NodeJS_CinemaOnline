@@ -37,7 +37,8 @@ const splitOptions = (query, searchingField) => {
   return resultIds;
 };
 
-const checkRole = roles => {
+//TODO Rename function - isAdmin
+const isAdmin = roles => {
   let isAdmin = false;
 
   roles.forEach(role => {
@@ -49,4 +50,8 @@ const checkRole = roles => {
   return isAdmin;
 };
 
-module.exports = { pagination, splitOptions, checkRole };
+const copyQuery = query => {
+  return JSON.parse(JSON.stringify(query));
+};
+
+module.exports = { pagination, splitOptions, isAdmin, copyQuery };
