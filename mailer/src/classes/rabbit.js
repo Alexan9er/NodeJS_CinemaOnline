@@ -4,19 +4,20 @@ const Mailer = require("./mailer");
 
 class Rabbit {
   constructor() {
-    this.channel = null;
+    this._channel = null;
   }
+
   start() {
-    amqp.connect(config.rabbitMQ.url, (error0, connection) => {
-      if (error0) {
-        throw error0;
+    amqp.connect(config.rabbitMQ.url, (connectionError, connection) => {
+      if (connectionError) {
+        throw connectionError;
       }
-      connection.createChannel((error1, channel) => {
-        if (error1) {
-          throw error1;
+      connection.createChannel((channelError, channel) => {
+        if (channelError) {
+          throw channelError;
         }
 
-        this.channel = channel;
+        this._channel = channel;
         const { logsQueue, emailsQueue } = config.rabbitMQ;
 
         channel.assertQueue(logsQueue, {
@@ -31,7 +32,7 @@ class Rabbit {
           logsQueue
         );
 
-        this.channel.consume(emailsQueue, message => {
+        this._channel.consume(emailsQueue, message => {
           const { recipient, emailMessage } = JSON.parse(
             message.content.toString()
           );
@@ -51,7 +52,7 @@ class Rabbit {
   }
 
   sendToLogsQueue(message) {
-    this.channel.sendToQueue(
+    this._channel.sendToQueue(
       config.rabbitMQ.logsQueue,
       Buffer.from(JSON.stringify(message))
     );

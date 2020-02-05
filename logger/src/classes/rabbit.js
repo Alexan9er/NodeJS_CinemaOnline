@@ -3,17 +3,14 @@ const config = require("../config");
 const Logger = require("./logger");
 
 class Rabbit {
-  constructor() {
-    this.channel = null;
-  }
   start() {
-    amqp.connect(config.rabbitMQ.url, (error0, connection) => {
-      if (error0) {
-        throw error0;
+    amqp.connect(config.rabbitMQ.url, (connectionError, connection) => {
+      if (connectionError) {
+        throw connectionError;
       }
-      connection.createChannel((error1, channel) => {
-        if (error1) {
-          throw error1;
+      connection.createChannel((channelError, channel) => {
+        if (channelError) {
+          throw channelError;
         }
 
         const { logsQueue } = config.rabbitMQ;
