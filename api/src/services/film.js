@@ -15,11 +15,25 @@ class FilmService {
     return await filmRepository.getAllFilms(pagination, queryCopy, tags);
   }
 
-  async createFilm(film) {
+  async createFilm(filmData, file) {
+    const film = filmData;
+
+    if (file) {
+      film.image = `${Date.now()}-${file.originalFilename}`;
+
+      helpers.copyFile(
+        file.path,
+        `${__dirname}/../../public/uploads/${film.image}`
+      );
+      helpers.deleteFile(file.path);
+
+      film.image = `${__dirname}/../../public/uploads/${film.image}`;
+    }
+
     const newFilm = await filmRepository.createFilm(film);
 
     if (film.tags) {
-      const tags = await tagRepository.getTagsByIds(film.tags);
+      const tags = await tagRepository.getTagsByIds(JSON.parse(film.tags));
       await newFilm.setTags(tags);
     }
     return newFilm;

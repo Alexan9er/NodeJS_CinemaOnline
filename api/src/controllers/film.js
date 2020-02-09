@@ -19,8 +19,7 @@ class FilmController {
   }
 
   async createFilm(req, res) {
-    const filmData = req.body;
-    const addedFilm = await filmService.createFilm(filmData);
+    const addedFilm = await filmService.createFilm(req.body, req.file);
 
     res.status(200).send(addedFilm);
   }
