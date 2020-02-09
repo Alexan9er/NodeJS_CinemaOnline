@@ -6,10 +6,10 @@ module.exports = Joi.object().keys({
     .max(200)
     .required(),
 
-  image: Joi.string()
-    .min(1)
-    .max(200)
-    .required(),
+  // image: Joi.string()
+  //   .min(1)
+  //   .max(200)
+  //   .required(),
 
   description: Joi.string().optional(),
 
@@ -23,7 +23,5 @@ module.exports = Joi.object().keys({
     .format("YYYY-MM-DD")
     .required(),
 
-  tags: Joi.array()
-    .items(Joi.number())
-    .optional()
+  tags: Joi.optional()
 });

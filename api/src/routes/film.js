@@ -10,6 +10,8 @@ const validate = require("../middlewares/validation");
 
 const isAuthenticated = require("../middlewares/is-authenticated");
 
+const prepareToUpload = require("../middlewares/prepare-to-upload");
+
 router.use(isAuthenticated);
 
 router.get("/", filmController.getAllFilms);
@@ -21,6 +23,7 @@ router.delete(
 );
 router.post(
   "/",
+  prepareToUpload,
   validate({
     body: validationSchemas.filmCreate
   }),

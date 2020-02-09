@@ -1,4 +1,5 @@
 const constants = require("./config/constants");
+const fs = require("fs");
 
 const pagination = query => {
   let pageNum, sizeNum;
@@ -55,4 +56,24 @@ const copyQuery = query => {
   return JSON.parse(JSON.stringify(query));
 };
 
-module.exports = { pagination, splitOptions, isAdmin, copyQuery };
+const copyFile = (source, destination) => {
+  fs.copyFile(source, destination, err => {
+    if (err) throw err;
+  });
+};
+
+const deleteFile = path => {
+  fs.unlink(path, err => {
+    if (err) throw err;
+    console.log("file deleted");
+  });
+};
+
+module.exports = {
+  pagination,
+  splitOptions,
+  isAdmin,
+  copyQuery,
+  copyFile,
+  deleteFile
+};
